@@ -10,3 +10,7 @@
 #ifndef ServoComponent
 	#include <components/servoComponent.hpp>
 #endif
+
+#ifndef PressureSensorComponent
+	#include "components/PressureSensorComponent.hpp"
+#endif
