@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ZedThree/clang-tidy-review@v0.14.0
+      - uses: ZedThree/clang-tidy-review@v0.21.0
         id: review
 
-      - uses: ZedThree/clang-tidy-review/upload@v0.14.0
+      - uses: ZedThree/clang-tidy-review/upload@v0.21.0
         id: upload-review
 
       - if: steps.review.outputs.total_comments > 0
