@@ -1,5 +1,13 @@
-# Define the joint angles for the home position, as taken from docs
-home_joint_positions = [-1.57, -1.57, 1.57, -1.57, -1.57, 0]
+# Define the joint angles for the home position, as taken from docs.
+# This is the same as clicking "home position" on polyclops.
+# Remember the array is [base, shoulder, elbow, wrist1, wrist2, wrist3]
+# Degrees to rad conversion: value in degrees × π/180 = rad 
+# Why the negative is 90 × π/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
+# Negative angles just mean “rotate clockwise” around the joint’s axis (from the joint’s frame of reference).
+# This is why the home pose has negative values for the shoulder and elbow.
 
-# Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
-movej(home_joint_positions, a=1.5, v=0.5)
+home_joint_positions = [0, -1.5708, 0, -1.5708,  0, 0]
+
+# Move the robot to the defined position, with acceleration as 'a' and velocity parameter as v
+
+movej(home_joint_positions, a = 1.5, v = 0.5)

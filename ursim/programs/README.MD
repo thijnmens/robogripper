@@ -12,6 +12,7 @@ Currently developing using the official Docker image:
   - [Table of Contents](#table-of-contents)
   - [Pull the Image](#pull-the-image)
   - [Run the Image](#run-the-image)
+  - [Specifics and how to read](#specifics-and-how-to-read)
 
 ---
 
@@ -38,15 +39,38 @@ docker run --rm -it -p 5900:5900 -p 6080:6080 universalrobots/ursim_e-series
 
 To add pathing of the scripts that are in this repo, add to your command the pathing based on where it's stored. this default to /home/programs (linux distros only, adjust for yourself)
 ```bash
--v "${HOME}/programs:/ursim/programs" universalrobots/ursim_e-series
+-v "REPOPATH/programs:/ursim/programs" universalrobots/ursim_e-series
 ```
 
 
 Which means, run 
 ```bash
-docker run --rm -it -p 5900:5900 -p 6080:6080 -v "${HOME}/programs:/ursim/programs" universalrobots/ursim_e-series
+docker run --rm -it -p 5900:5900 -p 6080:6080 -v "REPOPATH/programs:/ursim/programs" universalrobots/ursim_e-series
 ```
 Then access on
 ```bash
 http://localhost:6080/vnc.html?host=localhost&port=6080⁠    
+```
+
+
+## Specifics and how to read 
+
+Position of joints (pose or q, since the kinematics are done by ursim) is defined as an array of the following:
+
+q0 → Base joint (shoulder pan)
+
+q1 → Shoulder joint (shoulder lift)
+
+q2 → Elbow joint
+
+q3 → Wrist 1 joint
+
+q4 → Wrist 2 joint
+
+q5 → Wrist 3 joint
+
+
+thus, the base position as by default is as follows:
+```bash
+home_joint_positions = [-1.57, -1.57, 1.57, -1.57, -1.57, 0]
 ```
