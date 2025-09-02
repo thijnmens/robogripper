@@ -1,0 +1,5 @@
+ Program
+   Variables Setup
+   Robot Program
+     Script: base_position.script
+     Script: move_to_target.script

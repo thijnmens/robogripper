@@ -1,0 +1,5 @@
+# Define the joint angles for the home position, as taken from docs
+home_joint_positions = [-1.57, -1.57, 1.57, -1.57, -1.57, 0]
+
+# Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
+movej(home_joint_positions, a=1.5, v=0.5)

@@ -1,0 +1,45 @@
+def dev_test_1():
+  global _hidden_verificationVariable=0
+  set_target_payload(0.300000, [0.000000, 0.000000, 0.000000], [0.000207, 0.000207, 0.000207, 0.000000, 0.000000, 0.000000])
+  motion_version_set(1)
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_safety_mode_transition_hardness(1)
+  set_gravity([0.0, 0.0, 9.82])
+  tool_wrench_limit_disable()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  step_count_14cdaa53_ed8b_4fcb_ab35_7bac92f9895f = 0.0
+  thread Step_Counter_Thread_ca3e65db_74f2_43bc_8f66_a8e78d78897d():
+    while (True):
+      step_count_14cdaa53_ed8b_4fcb_ab35_7bac92f9895f = step_count_14cdaa53_ed8b_4fcb_ab35_7bac92f9895f + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_ca3e65db_74f2_43bc_8f66_a8e78d78897d()
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "Script: base_position.script"
+    # Define the joint angles for the home position, as taken from docs
+    home_joint_positions = [-1.57, -1.57, 1.57, -1.57, -1.57, 0]
+    
+    # Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
+    movej(home_joint_positions, a=1.5, v=0.5)
+    $ 4 "Script: move_to_target.script"
+    # Define the joint angles for the home position, as taken from docs
+    on_target_position = [-78.57, -115.57, -43.57, 102.57, -2.57, 0]
+    
+    # Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
+    # movej equals move joints
+    movej(on_target_position, a=1.5, v=0.5)
+  end
+end
