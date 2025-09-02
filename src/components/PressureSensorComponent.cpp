@@ -1,12 +1,10 @@
 ﻿#include "PressureSensorComponent.hpp"
 
-PressureSensorComponent::PressureSensorComponent() {
-    pin = 0;
+PressureSensorComponent::PressureSensorComponent() : pin(0) {
 }
 
-PressureSensorComponent::PressureSensorComponent(const int pin) {
+PressureSensorComponent::PressureSensorComponent(const int pin) : pin(pin) {
     pinMode(pin, INPUT);
-    PressureSensorComponent::pin = pin;
 }
 
 int PressureSensorComponent::getPressure() const {
