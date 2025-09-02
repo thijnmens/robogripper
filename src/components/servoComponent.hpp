@@ -1,3 +1,4 @@
+#pragma once
 #ifndef A0
 	#include <Arduino.h>
 #endif
@@ -11,12 +12,12 @@ class ServoComponent {
 	public:
 		ServoComponent();
 		/// @brief Attaches the servo to a pin
-		/// @param Pin The analog pin the servo should be attached to
-		ServoComponent(int);
+		/// @param pin The analog pin the servo should be attached to
+		explicit ServoComponent(int pin);
 
 		/// @brief Sets the rotation of the servo
-		/// @param Rotation in degrees
-		void setRotation(int);
+		/// @param rotation in degrees
+		void setRotation(int rotation);
 
 		/// @brief Returns if the Servo Component has an attached pin
 		/// @return True if attached
