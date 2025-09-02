@@ -4,3 +4,4 @@
 #endif
 
 #define SERVO_PIN A0
+#define PRESSURE_PIN A1

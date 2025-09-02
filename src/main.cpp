@@ -1,18 +1,18 @@
 #include <main.hpp>
 
 ServoComponent servoComponent;
+PressureSensorComponent pressureSensorComponent;
 
 void setup() {
   servoComponent = ServoComponent(SERVO_PIN);
-  pinMode(A1, INPUT);
+  pressureSensorComponent = PressureSensorComponent(PRESSURE_PIN);
 
   Serial.begin(115200);
 }
 
 void loop() {
 
-  const int res = analogRead(A1);
-  Serial.write(res);
+  const int res = pressureSensorComponent.getPressure();
   servoComponent.setRotation(res);
 
 }

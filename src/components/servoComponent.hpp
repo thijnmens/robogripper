@@ -11,8 +11,8 @@
 class ServoComponent {
 	public:
 		ServoComponent();
-		/// @brief Attaches the servo to a pin
-		/// @param pin The analog pin the servo should be attached to
+		/// @brief Creates a ServoComponent and attaches it to a pin
+		/// @param pin The analog pin the servo is physically attached to
 		explicit ServoComponent(int pin);
 
 		/// @brief Sets the rotation of the servo
