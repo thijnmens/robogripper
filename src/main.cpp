@@ -1,18 +1,24 @@
-#include <Arduino.h>
+#include <main.hpp>
 
-// put function declarations here:
-int myFunction(int, int);
+ServoComponent servoComponent;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  servoComponent = ServoComponent(SERVO_PIN);
+  pinMode(A1, INPUT);
+
+  Serial.begin(115200);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // servoComponent.setRotation(0);
+  // delay(5000);
+
+  // servoComponent.setRotation(90);
+  // delay(5000);
+
+  int res = analogRead(A1);
+  Serial.write(res);
+  servoComponent.setRotation(res);
+
 }
