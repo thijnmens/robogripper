@@ -3,8 +3,8 @@
 PressureSensorComponent::PressureSensorComponent() : pin(0) {
 }
 
-PressureSensorComponent::PressureSensorComponent(const int pin) : pin(pin) {
-    pinMode(pin, INPUT);
+PressureSensorComponent::PressureSensorComponent(const int p) : pin(p) {
+    pinMode(p, INPUT);
 }
 
 int PressureSensorComponent::getPressure() const {

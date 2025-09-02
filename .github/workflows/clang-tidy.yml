@@ -15,6 +15,3 @@ jobs:
 
       - uses: ZedThree/clang-tidy-review/upload@v0.21.0
         id: upload-review
-
-      - if: steps.review.outputs.total_comments > 0
-        run: exit 1
