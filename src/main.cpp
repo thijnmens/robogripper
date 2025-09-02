@@ -11,13 +11,7 @@ void setup() {
 
 void loop() {
 
-  // servoComponent.setRotation(0);
-  // delay(5000);
-
-  // servoComponent.setRotation(90);
-  // delay(5000);
-
-  int res = analogRead(A1);
+  const int res = analogRead(A1);
   Serial.write(res);
   servoComponent.setRotation(res);
 
