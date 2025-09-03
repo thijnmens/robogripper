@@ -1,4 +1,4 @@
-on_target_position = [-78.57, -115.57, -43.57, 102.57, -2.57, 0]
+on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
 
 # Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
 # movej equals move joints

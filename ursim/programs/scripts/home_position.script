@@ -2,7 +2,7 @@
 # This is the same as clicking "home position" on polyclops.
 # Remember the array is [base, shoulder, elbow, wrist1, wrist2, wrist3]
 # Degrees to rad conversion: value in degrees × π/180 = rad 
-# Why the negative is 90 × π/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
+# Why the negative if 90 × π/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
 # Negative angles just mean “rotate clockwise” around the joint’s axis (from the joint’s frame of reference).
 # This is why the home pose has negative values for the shoulder and elbow.
 

@@ -12,7 +12,7 @@ Currently developing using the official Docker image:
   - [Table of Contents](#table-of-contents)
   - [Pull the Image](#pull-the-image)
   - [Run the Image](#run-the-image)
-  - [Specifics and how to read](#specifics-and-how-to-read)
+  - [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
 
 ---
 
@@ -53,10 +53,15 @@ http://localhost:6080/vnc.html?host=localhost&port=6080⁠
 ```
 
 
-## Specifics and how to read 
+## Specifics and how to read the code
+There are a few different functions used on how the movement is implemented, namely:
 
-Position of joints (pose or q, since the kinematics are done by ursim) is defined as an array of the following:
-
+- movej: used to reach a specific pose by reaching specific joint positions.
+Position of joints (pose or q, since the kinematics are done in the background) is defined as an array of the following:
+The trajectory is usually curved (not a straight line).
+```bash
+pose = [ q0, q1, q2, q3, q4, q5 ] 
+```
 q0 → Base joint (shoulder pan)
 
 q1 → Shoulder joint (shoulder lift)
@@ -71,6 +76,29 @@ q5 → Wrist 3 joint
 
 
 thus, the base position as by default is as follows:
+
 ```bash
 home_joint_positions = [-1.57, -1.57, 1.57, -1.57, -1.57, 0]
 ```
+
+Use case: moving between waypoints where the exact path isn’t critical. For this gripper project that means not currently holding anything, and/or resetting to home / pickup position.
+
+
+- moveL(pose, …)
+
+Also interprets the target as a pose (same structure, but different meanings!).
+
+```bash
+pose = [x,y,z,Rx,Ry,Rz]
+```
+x, y, z ->  Cartesian position of the arm in meters (relative to the base frame) a/k/a where the arm is
+
+Rx, Ry, Rz -> Orientation of the TCP, represented as a rotation vector. a/k/a/ what's the rotation compared to the base frame.
+
+
+- get_actual_tcp_pose()
+  Returns the current measured tool pose in cartesian position (not JOINTS position!)
+
+- pose_add()
+  Both arguments contain three position parameters (x, y, z) jointly called P, and three rotation
+  parameters (R_x, R_y, R_z) jointly called R.

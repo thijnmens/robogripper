@@ -1,0 +1,34 @@
+#mermaid.live code
+#This has to be improved as it's not taking into account the pressure
+
+flowchart TD
+    %% Start
+    Start([Start / Home Position]) --> PrePick
+
+    %% Pre-pick
+    PrePick[/MoveJ to Pre-Pick Position/]
+
+    %% Approach pickup
+    PrePick --> ApproachPick[/"MoveL to Pickup Point"/]
+
+    %% Pick object
+    ApproachPick --> CloseGripper{{Confirmation / Close Gripper / Pick Object?}}
+ 
+    CloseGripper --> LiftObject[/Lift Object / Move Up/]
+
+    %% Move to place
+    LiftObject --> PrePlace[/Move to Pre-Place Position/]
+    PrePlace --> ApproachPlace[/"MoveL to Place Point"/]
+
+    %% Place object
+    ApproachPlace --> OpenGripper{{Open Gripper / Release Object?}}
+
+    OpenGripper --> ClearArea[/MoveL Up / Clear Area/]
+
+    %% Return
+    ClearArea --> ReturnHome[/Return to Home / Ready for Next Cycle/]
+
+    %% End or Loop
+    ReturnHome --> Loop{Repeat Cycle?}
+    Loop -->|Yes| PrePick
+    Loop -->|No| End([End])
