@@ -1,0 +1,17 @@
+name: clang-tidy-review
+
+on: [ pull_request ]
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ZedThree/clang-tidy-review@v0.21.0
+        id: review
+
+      - uses: ZedThree/clang-tidy-review/upload@v0.21.0
+        id: upload-review

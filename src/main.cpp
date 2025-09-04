@@ -1,18 +1,17 @@
-#include <Arduino.h>
+#include <main.hpp>
 
-// put function declarations here:
-int myFunction(int, int);
+ServoComponent servoComponent;
+PressureSensorComponent pressureSensorComponent;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    servoComponent = ServoComponent(SERVO_PIN);
+    pressureSensorComponent = PressureSensorComponent(PRESSURE_PIN);
+
+    Serial.begin(115200);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    const int res = pressureSensorComponent.getPressure();
+    servoComponent.setRotation(res);
+    Serial.println(res);
 }
