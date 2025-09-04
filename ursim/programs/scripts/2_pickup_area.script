@@ -1,0 +1,3 @@
+# For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
+pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
+movej(pick_up_area_position_j, a=1.5, v=0.5)
