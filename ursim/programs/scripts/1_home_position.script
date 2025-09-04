@@ -6,13 +6,13 @@
 # Negative angles just mean “rotate clockwise” around the joint’s axis (from the joint’s frame of reference).
 # This is why the home pose has negative values for the shoulder and elbow.
 
-popup("Commencing task")
+popup("Commencing task", title = "START", blocking = True)
 home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
 current_pose = get_actual_joint_positions()
 if (current_pose != home_joint_positions):
-    popup("Resetting to home position")
+    popup("Resetting to home position", title = "To home position", blocking = True)
     movej(home_joint_positions, a = 1.5, v = 0.5)
 else:
-    popup("Resetting unnecessary, skipping action...")
+    popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
     break
 end

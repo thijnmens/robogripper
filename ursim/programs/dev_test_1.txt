@@ -10,3 +10,4 @@
      Script: 2_pickup_area.script
      Script: 8_pickup_target_two_pos.script
      Script: 9_move_to_drop_position_two.script
+     Script: 6_execute_drop_action.script
