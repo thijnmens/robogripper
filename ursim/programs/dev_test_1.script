@@ -15,7 +15,7 @@ def dev_test_1():
   set_target_payload(0.300000, [0.000000, 0.000000, 0.000000], [0.000207, 0.000207, 0.000207, 0.000000, 0.000000, 0.000000])
   tool_wrench_limit_disable()
   motion_version_set(1)
-  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_tcp(p[0.1,0.0,0.0,0.0,0.0,0.0])
   set_safety_mode_transition_hardness(1)
   set_gravity([0.0, 0.0, 9.82])
   step_count_1d4a5f5f_cc89_4c78_9f36_b56bba25a098 = 0.0
@@ -42,27 +42,37 @@ def dev_test_1():
     # Move the robot to the defined position, with acceleration as 'a' and velocity parameter as v
     
     movej(home_joint_positions, a = 1.5, v = 0.5)
-    $ 4 "Script: pickup_target_one.script"
-    on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+    $ 4 "Script: move_to_pickup_area.script"
+    on_target_position = [0, -1.918888889, -1, 0, 1.5708, 0]
     
     # Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
     # movej equals move joints
     movej(on_target_position, a=1.5, v=0.5)
-    $ 5 "Script: execute_gripping_action.script"
-    #Executes the gripping action
-    $ 6 "Script: move_to_drop_position_one.script"
+    $ 5 "Script: pickup_target_one.script"
+    on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+    
+    # Move the robot to the definde position, with acceleration as 'a' and velocity parameter as 0.5
+    # movej equals move joints
+    movej(on_target_position, a = 1.5, v = 0.5)
     current_pose = get_actual_tcp_pose()
+    new_pose = pose_add(current_pose, p[0, 0, 0.5, 0, 0, 0])
+    movel(new_pose)
+    $ 6 "Script: execute_gripping_action.script"
+    #Executes the gripping action
+    $ 7 "Script: move_to_drop_position_one.script"
+    #https://s3-eu-west-1.amazonaws.com/ur-support-site/18383/scriptmanual_en_1.3.pdf
     
+    #current pose
+    current_pose = get_actual_tcp_pose()
+    #move to the right
     target_pose = pose_add(current_pose, p[0, 0.20, 0, 0, 0, 0])
-    
     movel(target_pose, a=1.0, v=0.25)
-    
+    #move straight
     target_pose = pose_add(current_pose, p[0.40, 0, 0, 0, 0, 0])
-    
+    movel(target_pose, a=1.0, v=0.25)
+    #move straight + drop the tooling
+    target_pose = pose_add(target_pose, p[0.15, 0, -0.40, 0, 0, 0])
     movel(target_pose, a=1.0, v=0.25)
     
-    target_pose = pose_add(current_pose, p[0, -0.20, 0, 0, 0, 0])
-    
-    movel(target_pose, a=1.0, v=0.25)
   end
 end

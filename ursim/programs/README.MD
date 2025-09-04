@@ -13,6 +13,7 @@ Currently developing using the official Docker image:
   - [Pull the Image](#pull-the-image)
   - [Run the Image](#run-the-image)
   - [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
+  - [Viewing Installation (.install) Files](#viewing-installation-install-files)
 
 ---
 
@@ -102,3 +103,7 @@ Rx, Ry, Rz -> Orientation of the TCP, represented as a rotation vector. a/k/a/ w
 - pose_add()
   Both arguments contain three position parameters (x, y, z) jointly called P, and three rotation
   parameters (R_x, R_y, R_z) jointly called R.
+
+## Viewing Installation (.install) Files
+
+.install files can't be opened normally through an IDE such as notepad or vscode, they have to first be converted into a zip/rar and then extracted.

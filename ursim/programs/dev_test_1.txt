@@ -2,6 +2,7 @@
    Variables Setup
    Robot Program
      Script: home_position.script
+     Script: move_to_pickup_area.script
      Script: pickup_target_one.script
      Script: execute_gripping_action.script
      Script: move_to_drop_position_one.script
