@@ -38,15 +38,15 @@ def dev_test_1():
     # This is why the home pose has negative values for the shoulder and elbow.
     
     popup("Commencing task", title = "START", blocking = True)
-        home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
-        current_pose = get_actual_joint_positions()
-        if (current_pose != home_joint_positions):
-            popup("Resetting to home position",title="To home position", blocking = True)
-            movej(home_joint_positions, a = 1.5, v = 0.5)
-        else:
-            popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
-                break
-            end
+    home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
+    current_pose = get_actual_joint_positions()
+    if (current_pose != home_joint_positions):
+        popup("Resetting to home position", title = "To home position", blocking = True)
+        movej(home_joint_positions, a = 1.5, v = 0.5)
+    else:
+        popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
+        break
+    end
     $ 4 "Script: 2_pickup_area.script"
     # For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
     popup("Moving to pickup area", title = "Pickup stance", blocking = True)
@@ -57,11 +57,11 @@ def dev_test_1():
     #even thought it doesn't conform with the preset standard (all automated kinematics except home / pickup area positions)
     on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
     pos = get_forward_kin(on_target_position)
-    popup(pos)
-    movej(on_target_position, a = 1.5, v = 0.5)
+    popup("Picking up first target", title = "First pick", blocking = True)
+    
+    movel(pos, a = 1.5, v = 0.5)
     
     $ 6 "Script: 4_execute_gripping_action.script"
-    voltage = 3.3   # pretend we measured 3.3V on an input, supposed to be the pressure sensor
     popup("Gripper action commencing", title = "Gripper action", blocking = True)
     
     voltage = get_analog_in(0)
@@ -83,11 +83,11 @@ def dev_test_1():
     move_straight_p = p[0.55, 0, 0, 0, 0, 0]
     height_reposition = p[0, 0, 0.1, 0, 0, 0]
     #move to the right
-    movel(pose_add(get_actual_tcp_pose(), move_right_p), a = 1.0, v = 0.25)
+    movel(pose_add(get_actual_tcp_pose(), move_right_p))
     #move straight
-    movel(pose_add(get_actual_tcp_pose(), move_straight_p), a = 1.0, v = 0.25)
+    movel(pose_add(get_actual_tcp_pose(), move_straight_p))
     #move down for tooling position
-    movel(pose_add(get_actual_tcp_pose(), height_reposition), a = 1.0, v = 0.25)
+    movel(pose_add(get_actual_tcp_pose(), height_reposition))
     
     $ 8 "Script: 6_execute_drop_action.script"
     set_standard_digital_out(0, False)
@@ -103,7 +103,7 @@ def dev_test_1():
     # Figured out the position with joints position rather than using the automated kinematics,
     #even thought it doesn't conform with the preset standard (all automated kinematics except home / pickup area positions)
     on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
-    popup("Picking up second target", title = "Second pick", blocking = True)
+    popup("Picking up first target", title = "Second pick", blocking = True)
     
     pos = get_forward_kin(on_target_position)
     movel(pos, a = 1.5, v = 0.5)
