@@ -5,7 +5,6 @@
 # Why the negative if 90 × π/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
 # Negative angles just mean “rotate clockwise” around the joint’s axis (from the joint’s frame of reference).
 # This is why the home pose has negative values for the shoulder and elbow.
-
 popup("Commencing task", title = "START", blocking = True)
 home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
 current_pose = get_actual_joint_positions()

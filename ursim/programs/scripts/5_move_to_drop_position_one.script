@@ -1,4 +1,6 @@
 #https://s3-eu-west-1.amazonaws.com/ur-support-site/18383/scriptmanual_en_1.3.pdf
+sleep(1)
+
 popup("Moving to first drop position", title = "Moving to first drop position", blocking = True)
 
 move_right_p = p[0, 0.20, 0, 0, 0, 0]

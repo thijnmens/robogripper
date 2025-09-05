@@ -1,3 +1,5 @@
+sleep(1)
+
 popup("Gripper action commencing", title = "Gripper action", blocking = True)
 
 voltage = get_standard_analog_in(0)
