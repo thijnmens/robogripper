@@ -3,9 +3,15 @@
 sleep(1)
 
 on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+rotated_positions = [on_target_position[0] + 0.7854,
+    on_target_position[1],
+    on_target_position[2],
+    on_target_position[3],
+    on_target_position[4],
+on_target_position[5]]
 pos = get_forward_kin(on_target_position)
 popup("Picking up first target", title = "First pick", blocking = True)
 target_pose = pose_add(pos, p[0, 0, 0.3, 0, 0, 0]) #30 mm up
-    
+
 movel(pos)
 

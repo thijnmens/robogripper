@@ -3,13 +3,13 @@ sleep(1)
 
 popup("Moving to first drop position", title = "Moving to first drop position", blocking = True)
 
-move_right_p = p[0, 0.20, 0, 0, 0, 0]
-move_straight_p = p[0.55, 0, 0, 0, 0, 0]
+move_right_p = p[0.55, 0.20, 0, 0, 0, 0]
+#move_straight_p = p[0.55, 0, 0, 0, 0, 0]
 height_reposition = p[0, 0, 0.1, 0, 0, 0]
 #move to the right
 movel(pose_add(get_actual_tcp_pose(), move_right_p))
 #move straight
-movel(pose_add(get_actual_tcp_pose(), move_straight_p))
+#movel(pose_add(get_actual_tcp_pose(), move_straight_p))
 #move down for tooling position
 movel(pose_add(get_actual_tcp_pose(), height_reposition))
 

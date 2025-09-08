@@ -27,6 +27,7 @@ def dev_test_1():
   end
   run Step_Counter_Thread_7f43e596_c763_4ef5_9dde_4e7c5a8ae170()
   while (True):
+    
     $ 2 "Robot Program"
     $ 3 "Script: 1_home_position.script"
     # Define the joint angles for the home position, as taken from docs.

@@ -12,8 +12,8 @@ Currently developing using the official Docker image:
   - [Table of Contents](#table-of-contents)
   - [Pull the Image](#pull-the-image)
   - [Run the Image](#run-the-image)
-  - [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
   - [Viewing Installation (.install) Files](#viewing-installation-install-files)
+- [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
 
 ---
 
@@ -54,7 +54,11 @@ http://localhost:6080/vnc.html?host=localhost&port=6080⁠
 ```
 
 
-## Specifics and how to read the code
+## Viewing Installation (.install) Files
+
+.install files can't be opened normally through an IDE such as notepad or vscode, they have to first be converted into a zip/rar and then extracted.
+
+# Specifics and how to read the code
 There are a few different functions used on how the movement is implemented, namely:
 
 - movej: used to reach a specific pose by reaching specific joint positions.
@@ -103,7 +107,3 @@ Rx, Ry, Rz -> Orientation of the TCP, represented as a rotation vector. a/k/a/ w
 - pose_add()
   Both arguments contain three position parameters (x, y, z) jointly called P, and three rotation
   parameters (R_x, R_y, R_z) jointly called R.
-
-## Viewing Installation (.install) Files
-
-.install files can't be opened normally through an IDE such as notepad or vscode, they have to first be converted into a zip/rar and then extracted.
