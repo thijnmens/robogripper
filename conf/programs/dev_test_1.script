@@ -1,12 +1,14 @@
 def dev_test_1():
   global _hidden_verificationVariable=0
-  set_gravity([0.0, 0.0, 9.82])
-  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
-  set_tool_output_mode(0)
-  set_tool_digital_output_mode(0, 1)
-  set_tool_digital_output_mode(1, 1)
-  set_tool_voltage(0)
-  set_safety_mode_transition_hardness(1)
+  step_count_22fb72b6_7bda_4c18_98f8_54e16d24ef3b = 0.0
+  thread Step_Counter_Thread_eea3d846_451a_4038_ae09_a4a7e9ed6e83():
+    while (True):
+      step_count_22fb72b6_7bda_4c18_98f8_54e16d24ef3b = step_count_22fb72b6_7bda_4c18_98f8_54e16d24ef3b + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_eea3d846_451a_4038_ae09_a4a7e9ed6e83()
+  set_target_payload(0.300000, [0.000000, 0.000000, 0.000000], [0.000207, 0.000207, 0.000207, 0.000000, 0.000000, 0.000000])
   set_standard_analog_input_domain(0, 0)
   set_standard_analog_input_domain(1, 1)
   set_tool_analog_input_domain(0, 1)
@@ -14,119 +16,128 @@ def dev_test_1():
   set_analog_outputdomain(0, 0)
   set_analog_outputdomain(1, 0)
   set_input_actions_to_default()
-  motion_version_set(1)
-  set_target_payload(0.300000, [0.000000, 0.000000, 0.000000], [0.000207, 0.000207, 0.000207, 0.000000, 0.000000, 0.000000])
   set_tcp(p[0.1,0.0,0.0,0.0,0.0,0.0])
   tool_wrench_limit_disable()
-  step_count_dea1b4b1_b0bb_4938_a7ea_45563b22bf69 = 0.0
-  thread Step_Counter_Thread_7f43e596_c763_4ef5_9dde_4e7c5a8ae170():
-    while (True):
-      step_count_dea1b4b1_b0bb_4938_a7ea_45563b22bf69 = step_count_dea1b4b1_b0bb_4938_a7ea_45563b22bf69 + 1.0
-      sync()
-    end
-  end
-  run Step_Counter_Thread_7f43e596_c763_4ef5_9dde_4e7c5a8ae170()
+  set_gravity([0.0, 0.0, 9.82])
+  set_safety_mode_transition_hardness(1)
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  motion_version_set(1)
   while (True):
-    
     $ 2 "Robot Program"
-    $ 3 "Script: 1_home_position.script"
+    $ 3 "Script: 4_execute_gripping_action.script"
+    def execute_gripping_action():
+    
+        popup("Gripper action commencing", title = "Gripper action", blocking = True)
+    
+        voltage = get_standard_analog_in(0)
+        target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.5, 0, 0, 0]) #50 mm up
+        if (voltage > 2.0):
+            set_standard_digital_out(0, True)   #close gripper
+            sleep(1.0)
+            # lift the product
+            movel(target_pose)
+        else:
+            popup("Voltage too low - Gripper not activated", title = "FAILURE", blocking = True)
+        end
+    end
+    $ 4 "Script: 6_execute_drop_action.script"
+    def execute_drop_action():
+        set_standard_digital_out(0, False)
+        target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.3, 0, 0, 0]) #30 mm up
+    end
+    
+    $ 5 "Script: 1_home_position.script"
     # Define the joint angles for the home position, as taken from docs.
     # This is the same as clicking "home position" on polyclops.
     # Remember the array is [base, shoulder, elbow, wrist1, wrist2, wrist3]
-    # Degrees to rad conversion: value in degrees �� ��/180 = rad
-    # Why the negative if 90 �� ��/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
-    # Negative angles just mean ���rotate clockwise��� around the joint���s axis (from the joint���s frame of reference).
+    # Degrees to rad conversion: value in degrees ?? ??/180 = rad
+    # Why the negative if 90 ?? ??/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
+    # Negative angles just mean ???rotate clockwise??? around the joint???s axis (from the joint???s frame of reference).
     # This is why the home pose has negative values for the shoulder and elbow.
+    base_45_rotation = 0.7854
     
-    popup("Commencing task", title = "START", blocking = True)
-    home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
-    current_pose = get_actual_joint_positions()
-    if (current_pose != home_joint_positions):
-        popup("Resetting to home position", title = "To home position", blocking = True)
-        movej(home_joint_positions, a = 1.5, v = 0.5)
-    else:
-        popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
-        break
+    def home_position():
+        popup("Commencing task", title = "START", blocking = True)
+        home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
+    
+        # Add 45 degrees to Joint 1 (the base)
+        # 45 degrees to radian = 0.7854
+        rotated_positions = [home_joint_positions[0] + 0.7854,
+            home_joint_positions[1],
+            home_joint_positions[2],
+            home_joint_positions[3],
+            home_joint_positions[4],
+        home_joint_positions[5]]
+        current_pose = get_actual_joint_positions()
+        if (current_pose != rotated_positions):
+            popup("Resetting to home position", title = "To home position", blocking = True)
+            movej(rotated_positions, a = 1.2, v = 0.25)
+        else:
+            popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
+    
+        end
     end
-    $ 4 "Script: 2_pickup_area.script"
+    
+    home_position()
+    $ 6 "Script: 2_pickup_area.script"
     # For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
-    popup("Moving to pickup area", title = "Pickup stance", blocking = True)
-    pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
-    movej(pick_up_area_position_j, a=1.5, v=0.5)
-    $ 5 "Script: 3_pickup_target_one.script"
+    def move_to_pickup_area():
+        popup("Moving to pickup area", title = "Pickup stance", blocking = True)
+        pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
+        rotated_pick_up_positions = [pick_up_area_position_j[0] + 0.7854,
+            pick_up_area_position_j[1],
+            pick_up_area_position_j[2],
+            pick_up_area_position_j[3],
+            pick_up_area_position_j[4],
+        pick_up_area_position_j[5]]
+    
+        movej(rotated_pick_up_positions, a = 1.5, v = 0.5)
+    end
+    move_to_pickup_area()
+    $ 7 "Script: 3_pickup_target_one.script"
     # Figured out the position with joints position rather than using the automated kinematics,
     #even thought it doesn't conform with the preset standard (all automated kinematics except home / pickup area positions)
-    on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
-    pos = get_forward_kin(on_target_position)
-    popup("Picking up first target", title = "First pick", blocking = True)
+    def pickup_target_one():
+        on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+        rotated_positions = [on_target_position[0] + base_45_rotation,
+            on_target_position[1],
+            on_target_position[2],
+            on_target_position[3],
+            on_target_position[4],
+        on_target_position[5]]
+        height_reposition = p[0, 0, -0.3, 0, 0, 0]
     
-    movel(pos, a = 1.5, v = 0.5)
+        pos = get_forward_kin(rotated_positions)
     
-    $ 6 "Script: 4_execute_gripping_action.script"
-    popup("Gripper action commencing", title = "Gripper action", blocking = True)
+        popup("Picking up first target", title = "First pick", blocking = True)
     
-    voltage = get_analog_in(0)
-    target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.5, 0, 0, 0]) #50 mm up
-    if (voltage > 2.0):
-        set_digital_out(0, True)   #close gripper
-        sleep(1.0)
-        # lift the product
-        movel(target_pose, a = 1.0, v = 0.25)
-    else:
-        popup("Voltage too low - Gripper not activated", title = "FAILURE", blocking = True )
+        movel(pose_add(pos, height_reposition))
     
     end
-    $ 7 "Script: 5_move_to_drop_position_one.script"
+    pickup_target_one()
+    execute_gripping_action()
+    $ 8 "Script: 5_move_to_drop_position_one.script"
     #https://s3-eu-west-1.amazonaws.com/ur-support-site/18383/scriptmanual_en_1.3.pdf
-    popup("Moving to first drop position", title = "Moving to first drop position", blocking = True)
+    def move_to_drop_position_one():
     
-    move_right_p = p[0, 0.20, 0, 0, 0, 0]
-    move_straight_p = p[0.55, 0, 0, 0, 0, 0]
-    height_reposition = p[0, 0, 0.1, 0, 0, 0]
-    #move to the right
-    movel(pose_add(get_actual_tcp_pose(), move_right_p))
-    #move straight
-    movel(pose_add(get_actual_tcp_pose(), move_straight_p))
-    #move down for tooling position
-    movel(pose_add(get_actual_tcp_pose(), height_reposition))
+        popup("Moving to first drop position", title = "Moving to first drop position", blocking = True)
     
-    $ 8 "Script: 6_execute_drop_action.script"
-    set_standard_digital_out(0, False)
+        move_right_p = p[0.55, 0.20, 0, 0, 0, 0]
+        move_straight_p = p[0.55, 0, 0, 0, 0, 0]
+        height_reposition = p[0, 0, 0.1, 0, 0, 0]
+        #move to the right
+        movel(pose_add(get_actual_tcp_pose(), move_right_p))
+        #move straight
+       # movel(pose_add(get_actual_tcp_pose(), move_straight_p))
+        #move down for tooling position
+        movel(pose_add(get_actual_tcp_pose(), height_reposition))
     
-    target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.3, 0, 0, 0]) #30 mm up
-    
-    $ 9 "Script: 2_pickup_area.script"
-    # For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
-    popup("Moving to pickup area", title = "Pickup stance", blocking = True)
-    pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
-    movej(pick_up_area_position_j, a=1.5, v=0.5)
-    $ 10 "Script: 8_pickup_target_two_pos.script"
-    # Figured out the position with joints position rather than using the automated kinematics,
-    #even thought it doesn't conform with the preset standard (all automated kinematics except home / pickup area positions)
-    on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
-    popup("Picking up first target", title = "Second pick", blocking = True)
-    
-    pos = get_forward_kin(on_target_position)
-    movel(pos, a = 1.5, v = 0.5)
-    
-    $ 11 "Script: 9_move_to_drop_position_two.script"
-    #https://s3-eu-west-1.amazonaws.com/ur-support-site/18383/scriptmanual_en_1.3.pdf
-    popup("Moving to second drop position", title = "Moving to second drop position", blocking = True)
-    
-    move_right_p = p[0, 0.20, 0, 0, 0, 0]
-    move_straight_p = p[0.55, 0, 0, 0, 0, 0]
-    height_reposition = p[0, 0, 0.1, 0, 0, 0]
-    #move to the right
-    movel(pose_add(get_actual_tcp_pose(), move_right_p), a = 1.0, v = 0.25)
-    #move straight
-    movel(pose_add(get_actual_tcp_pose(), move_straight_p), a = 1.0, v = 0.25)
-    #move down for tooling position
-    movel(pose_add(get_actual_tcp_pose(), height_reposition), a = 1.0, v = 0.25)
-    
-    $ 12 "Script: 6_execute_drop_action.script"
-    set_standard_digital_out(0, False)
-    
-    target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.3, 0, 0, 0]) #30 mm up
-    
+    end
+    move_to_drop_position_one()
+    execute_drop_action()
   end
 end
