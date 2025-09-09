@@ -1,6 +1,6 @@
 # Figured out the position with joints position rather than using the automated kinematics,
 #even thought it doesn't conform with the preset standard (all automated kinematics except home / pickup area positions)
-def pickup_target_one():
+def pickup_target():
     on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
     rotated_positions = [on_target_position[0] + base_45_rotation,
         on_target_position[1],
@@ -9,13 +9,17 @@ def pickup_target_one():
         on_target_position[4],
     on_target_position[5]]
     height_reposition = p[0, 0, 0.3, 0, 0, 0]
+    target_one_position = p[-0.05, -0.05, 0, 0, 0, 0]
+    target_two_position = p[-0.05, 0.05, 0, 0, 0, 0]
+    target_three_position = p[0.05, -0.05, 0, 0, 0, 0]
+    target_four_position = p[0.05, 0.05, 0, 0, 0, 0]
 
     pos = get_forward_kin(rotated_positions)
-
+    pos2 = pose_add(pos, target_one_position)
     popup("Picking up first target", title = "First pick", blocking = True)
 
-    movel(pose_add(pos, height_reposition))
+    movel(pose_add(pos2, height_reposition))
 
 end
-pickup_target_one()
+pickup_target()
 execute_gripping_action()

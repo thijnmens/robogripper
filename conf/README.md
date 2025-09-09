@@ -40,7 +40,7 @@ docker run --rm -it -p 5900:5900 -p 6080:6080 universalrobots/ursim_e-series
 
 To add pathing of the scripts that are in this repo, add to your command the pathing based on where it's stored. this default to /home/programs (linux distros only, adjust for yourself)
 ```bash
--v "REPOPATH/programs:/ursim/programs" universalrobots/ursim_e-series
+-v "~/conf/programs:/ursim/programs" universalrobots/ursim_e-series
 ```
 
 

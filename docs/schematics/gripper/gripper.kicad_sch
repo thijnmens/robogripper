@@ -363,144 +363,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:R_Small_US"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.254)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "R"
-				(at 0.762 0.508 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "R_Small_US"
-				(at 0.762 -1.016 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Resistor, small US symbol"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "r resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "R_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "R_Small_US_1_1"
-				(polyline
-					(pts
-						(xy 0 1.524) (xy 1.016 1.143) (xy 0 0.762) (xy -1.016 0.381) (xy 0 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 1.016 -0.381) (xy 0 -0.762) (xy -1.016 -1.143) (xy 0 -1.524)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at 0 2.54 270)
-					(length 1.016)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -2.54 90)
-					(length 1.016)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "MCU_Module:Arduino_Nano_v3.x"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -1152,6 +1014,10 @@
 		(uuid "1862a6d4-5aa9-481e-95bb-0112e3bf2580")
 	)
 	(no_connect
+		(at 138.43 124.46)
+		(uuid "1ce54e6b-81e2-4822-8094-868e699c655a")
+	)
+	(no_connect
 		(at 148.59 106.68)
 		(uuid "2983f3a7-08bd-4f4b-b813-4f8167deb8df")
 	)
@@ -1271,16 +1137,6 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 130.81) (xy 138.43 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2e9b6bae-174e-4661-a978-f98178afe9eb")
-	)
-	(wire
-		(pts
 			(xy 140.97 71.12) (xy 140.97 73.66)
 		)
 		(stroke
@@ -1301,33 +1157,13 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 104.14) (xy 114.3 104.14)
+			(xy 135.89 124.46) (xy 135.89 130.81)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "497e4ffa-13cf-4fca-b322-ad8a440a2a6e")
-	)
-	(wire
-		(pts
-			(xy 138.43 124.46) (xy 138.43 130.81)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "530a37bb-d759-4771-ba32-453a0cbc06b7")
-	)
-	(wire
-		(pts
-			(xy 119.38 104.14) (xy 123.19 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "610a63fe-c31e-496a-bdfa-dd50cf13474a")
+		(uuid "59929050-cd79-42f3-bc58-f1f8cc0231a9")
 	)
 	(wire
 		(pts
@@ -1348,6 +1184,16 @@
 			(type default)
 		)
 		(uuid "7c5f7e33-b0f3-458d-803a-b44837d7c6f1")
+	)
+	(wire
+		(pts
+			(xy 132.08 130.81) (xy 135.89 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8fe052c8-793e-4fd6-867a-bf50cfbfe6c1")
 	)
 	(wire
 		(pts
@@ -1427,28 +1273,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "CBank Negative"
-		(shape input)
-		(at 111.76 104.14 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "28a51c58-6205-4535-8a7c-797d3bd94d8c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 93.8373 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -1541,93 +1365,25 @@
 			)
 		)
 	)
-	(global_label "CBank Positive"
+	(global_label "CBank Negative"
 		(shape input)
-		(at 139.7 130.81 0)
+		(at 132.08 130.81 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "fc5b68fb-4f54-48db-8193-5d6f17fe8192")
+		(uuid "ef76a2d4-a29b-4b96-a14e-5ffff3d64f85")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 156.7155 130.81 0)
+			(at 114.1573 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_Small_US")
-		(at 116.84 104.14 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0c9aa357-69a4-43be-a19b-6ae18b234cbf")
-		(property "Reference" "R1"
-			(at 116.84 97.79 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "R_Small_US"
-			(at 116.84 100.33 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 116.84 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 116.84 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small US symbol"
-			(at 116.84 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "a03323ce-8eb7-466b-b895-45d20fc20cb6")
-		)
-		(pin "1"
-			(uuid "c9999cc7-c854-4c05-9132-0c6c660f79de")
-		)
-		(instances
-			(project ""
-				(path "/533bdd2f-3181-4661-9f60-bcbf7eae8dea"
-					(reference "R1")
-					(unit 1)
-				)
 			)
 		)
 	)
@@ -1659,7 +1415,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
 			(at 185.1152 53.34 0)
 			(effects
 				(font
@@ -1728,7 +1484,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Phoenix_GMSTB:PhoenixContact_GMSTBA_2,5_3-G-7,62_1x03_P7.62mm_Horizontal"
 			(at 175.26 101.6 0)
 			(effects
 				(font
@@ -1956,7 +1712,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
 			(at 162.2552 53.34 0)
 			(effects
 				(font

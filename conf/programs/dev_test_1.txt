@@ -1,5 +1,5 @@
  Program
-   Variables Setup
+   Init Variables
    Robot Program
      Script: 4_execute_gripping_action.script
      Script: 6_execute_drop_action.script
