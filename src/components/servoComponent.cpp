@@ -7,7 +7,7 @@ ServoComponent::ServoComponent(const int pin) {
 }
 
 void ServoComponent::setRotation(const int rotation) {
-    const long mappedRotation = map(rotation, 0, 1024, 0, 180);
+    const long mappedRotation = map(rotation, 0, 180, 0, 200);
     servo.write(static_cast<int>(mappedRotation));
 }
 

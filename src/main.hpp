@@ -14,3 +14,7 @@
 #ifndef PressureSensorComponent
 #include "components/PressureSensorComponent.hpp"
 #endif
+
+#ifndef Robot
+#include "components/robot.hpp"
+#endif

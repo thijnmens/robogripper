@@ -8,6 +8,8 @@
 
 class Robot {
 public:
+    Robot();
+
     explicit Robot(int conPin, int comPin);
 
     /// @brief blocks the thread until a new command has been recieved from the robot
@@ -17,6 +19,6 @@ public:
     void sendConfirmation() const;
 
 private:
-    const int confirmPin;
-    const int commandPin;
+    int confirmPin;
+    int commandPin;
 };
