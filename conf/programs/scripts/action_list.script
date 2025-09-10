@@ -1,0 +1,17 @@
+home_position()
+
+pickup_area()
+pickup_target(0)
+move_to_drop_position(0)
+
+pickup_area()
+pickup_target(1)
+move_to_drop_position(1)
+
+pickup_area()
+pickup_target(2)
+move_to_drop_position(2)
+
+pickup_area()
+pickup_target(3)
+move_to_drop_position(3)

@@ -1,9 +1,10 @@
  Program
    Init Variables
    Robot Program
-     Script: 4_execute_gripping_action.script
-     Script: 6_execute_drop_action.script
-     Script: 1_home_position.script
-     Script: 2_pickup_area.script
-     Script: 3_pickup_target_one.script
-     Script: 5_move_to_drop_position_one.script
+     Script: home_position.script
+     Script: pickup_area.script
+     Script: execute_drop_action.script
+     Script: execute_gripping_action.script
+     Script: move_to_drop_pos.script
+     Script: pickup_target.script
+     Script: action_list.script

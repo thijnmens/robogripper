@@ -1,5 +1,0 @@
-def execute_drop_action():
-    set_standard_digital_out(0, False)
-    target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, -0.1, 0, 0, 0]) #30 mm up
-end
-

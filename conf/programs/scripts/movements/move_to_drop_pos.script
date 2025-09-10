@@ -1,0 +1,24 @@
+def move_to_drop_position(index):
+    popup("Dropping target number: " + to_str(index + 1),
+        title = "Dropping target number: " + to_str(index + 1),
+    blocking = True)
+
+    move_right_p = p[0, 0.3, 0, 0, 0, 0]
+    move_straight_p = p[0.2, 0, 0, 0, 0, 0]
+    height_reposition = p[0, 0, -0.1, 0, 0, 0]
+
+    if index == 0:
+        move_right_p = p[0, 0.30, 0, 0, 0, 0]
+    elif index == 1:
+        move_right_p = p[0, 0.25, 0, 0, 0, 0]
+    elif index == 2:
+        move_right_p = p[0, 0.15, 0, 0, 0, 0]
+    elif index == 3:
+        move_right_p = p[0, 0.10, 0, 0, 0, 0]
+    end
+
+    movel(pose_add(get_actual_tcp_pose(), move_right_p))
+    movel(pose_add(get_actual_tcp_pose(), move_straight_p))
+    movel(pose_add(get_actual_tcp_pose(), height_reposition))
+
+end

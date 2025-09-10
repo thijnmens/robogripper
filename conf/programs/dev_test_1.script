@@ -1,0 +1,170 @@
+def dev_test_1():
+  set_gravity([0.0, 0.0, 9.82])
+  step_count_ad92e63f_5318_4c44_b89a_f98d4bdf922e = 0.0
+  thread Step_Counter_Thread_7ccda7a2_da37_4299_bf36_454cbe80dda0():
+    while (True):
+      step_count_ad92e63f_5318_4c44_b89a_f98d4bdf922e = step_count_ad92e63f_5318_4c44_b89a_f98d4bdf922e + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_7ccda7a2_da37_4299_bf36_454cbe80dda0()
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_payload(0.0)
+  set_safety_mode_transition_hardness(1)
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tool_voltage(0)
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "Script: home_position.script"
+    # Define the joint angles for the home position, as taken from docs.
+    # This is the same as clicking "home position" on polyclops.
+    # Remember the array is [base, shoulder, elbow, wrist1, wrist2, wrist3]
+    # Degrees to rad conversion: value in degrees ?? ??/180 = rad
+    # Why the negative if 90 ?? ??/180 = 1.5708? We use negative becase UR defines forward for the shoulder as negative rotation.
+    # Negative angles just mean ???rotate clockwise??? around the joint???s axis (from the joint???s frame of reference).
+    # This is why the home pose has negative values for the shoulder and elbow.
+    base_45_rotation = 0.7854
+    
+    def home_position():
+        popup("Commencing task", title = "START", blocking = True)
+        home_joint_positions = [0, -1.5708, -1.5708, -1.5708, 0, 0]
+    
+        # Add 45 degrees to Joint 1 (the base)
+        # 45 degrees to radian = 0.7854
+        rotated_positions = [home_joint_positions[0] + 0.7854,
+            home_joint_positions[1],
+            home_joint_positions[2],
+            home_joint_positions[3],
+            home_joint_positions[4],
+        home_joint_positions[5]]
+        current_pose = get_actual_joint_positions()
+        if (current_pose != rotated_positions):
+            popup("Resetting to home position", title = "To home position", blocking = True)
+            movej(rotated_positions)
+        else:
+            popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)
+    
+        end
+    end
+    
+    
+    $ 4 "Script: pickup_area.script"
+    # For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
+    def pickup_area():
+        popup("Moving to pickup area", title = "Pickup stance", blocking = True)
+        pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
+        rotated_pick_up_positions = [pick_up_area_position_j[0] + 0.7854,
+            pick_up_area_position_j[1],
+            pick_up_area_position_j[2],
+            pick_up_area_position_j[3],
+            pick_up_area_position_j[4],
+        pick_up_area_position_j[5]]
+    
+        movej(rotated_pick_up_positions)
+    end
+    $ 5 "Script: execute_drop_action.script"
+    def execute_drop_action():
+        target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, -0.1, 0, 0, 0]) #30 mm up
+    
+        set_standard_digital_out(0, False)
+    end
+    
+    $ 6 "Script: execute_gripping_action.script"
+    def execute_gripping_action():
+    
+        popup("Gripper action commencing", title = "Gripper action", blocking = True)
+    
+        voltage = get_standard_analog_in(0)
+        target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.1, 0, 0, 0]) #50 mm up
+        if (voltage != 0):
+            sleep(1.0)
+            movel(target_pose)
+            set_standard_digital_out(0, True)   #close gripper
+    
+        else:
+            popup("Voltage too low - Gripper not activated", title = "FAILURE", blocking = True)
+        end
+    end
+    $ 7 "Script: move_to_drop_pos.script"
+    def move_to_drop_position(index):
+        popup("Dropping target number: " + to_str(index + 1),
+            title = "Dropping target number: " + to_str(index + 1),
+        blocking = True)
+    
+        move_right_p = p[0, 0.3, 0, 0, 0, 0]
+        move_straight_p = p[0.2, 0, 0, 0, 0, 0]
+        height_reposition = p[0, 0, -0.1, 0, 0, 0]
+    
+        if index == 0:
+            move_right_p = p[0, 0.30, 0, 0, 0, 0]
+        elif index == 1:
+            move_right_p = p[0, 0.25, 0, 0, 0, 0]
+        elif index == 2:
+            move_right_p = p[0, 0.15, 0, 0, 0, 0]
+        elif index == 3:
+            move_right_p = p[0, 0.10, 0, 0, 0, 0]
+        end
+    
+        movel(pose_add(get_actual_tcp_pose(), move_right_p))
+        movel(pose_add(get_actual_tcp_pose(), move_straight_p))
+        movel(pose_add(get_actual_tcp_pose(), height_reposition))
+    
+    end
+    $ 8 "Script: pickup_target.script"
+    def pickup_target(index):
+        on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+        rotated_positions = [on_target_position[0] + base_45_rotation,
+            on_target_position[1],
+            on_target_position[2],
+            on_target_position[3],
+            on_target_position[4],
+        on_target_position[5]]
+    
+        height_reposition = p[0, 0, 0.3, 0, 0, 0]
+        target_positions = [p[-0.05, -0.05, 0, 0, 0, 0],   # target 1
+            p[-0.05, 0.05, 0, 0, 0, 0],   # target 2
+            p[0.05, -0.05, 0, 0, 0, 0],   # target 3
+        p[0.05, 0.05, 0, 0, 0, 0]]   # target 4
+        # sanity check
+        if (index >= 0) and (index < size(target_positions)):
+            pos = get_forward_kin(rotated_positions)
+            target_offset = target_positions[index]
+    
+            popup("Picking up target number: " + to_str(index + 1),
+                title = "Picking target number: " + to_str(index + 1),
+            blocking = True)
+    
+            movel(pose_add(pose_add(pos, target_offset), height_reposition))
+    
+            execute_gripping_action()
+        else:
+            popup("Invalid pickup index: " + to_str(index),
+            title = "Error", blocking = True)
+        end
+    end
+    $ 9 "Script: action_list.script"
+    home_position()
+    
+    pickup_area()
+    pickup_target(0)
+    move_to_drop_position(0)
+    
+    pickup_area()
+    pickup_target(1)
+    move_to_drop_position(1)
+    
+    pickup_area()
+    pickup_target(2)
+    move_to_drop_position(2)
+    
+    pickup_area()
+    pickup_target(3)
+    move_to_drop_position(3)
+  end
+end
