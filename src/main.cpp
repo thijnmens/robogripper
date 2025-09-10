@@ -1,18 +1,29 @@
-#include <Arduino.h>
+#include <main.hpp>
 
-// put function declarations here:
-int myFunction(int, int);
+ServoComponent servoComponent;
+PressureSensorComponent pressureSensorComponent;
+Robot robot;
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    servoComponent = ServoComponent(SERVO_PIN);
+    pressureSensorComponent = PressureSensorComponent(PRESSURE_PIN);
+    robot = Robot(CONFIRM_PIN, COMMAND_PIN);
+
+    Serial.begin(115200);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+    // Open cage on command
+    robot.waitForCommand();
+    servoComponent.setRotation(70);
+    robot.sendConfirmation();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    // delay(5000);
+
+    // Close cage on command
+    robot.waitForCommand();
+    servoComponent.setRotation(95);
+    robot.sendConfirmation();
+
+    // delay(5000);
 }
