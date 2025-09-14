@@ -1,0 +1,30 @@
+flowchart TD
+    WaitForSignal[/"Wait for Start Signal"/] --> CalculatePath[/"Define Path OR Calculate safe path to object (Pre-Pick Position)"/]
+    CalculatePath --> PrePick[/"MoveJ to Pre-Pick Position"/]
+    PrePick --> CheckClearance{{"Define path OR Check Path is Clear"}}
+    CheckClearance -- Yes --> ApproachPick[/"MoveL to Pickup Point"/]
+    CheckClearance -- No --> HandleError[/"Handle Error: Failed to Release Object"/]
+    ApproachPick --> CloseGripper{{"Confirmation / Close Gripper / Pick Object?"}}
+    CloseGripper --> CheckGrip{{"Check for successfull grip (sensors)"}}
+    CheckGrip -- Yes --> LiftObject[/"Lift Object / Move Up"/]
+    CheckGrip -- No --> HandleError
+    LiftObject --> PrePlace[/"Move to Pre-Place Position"/]
+    PrePlace --> ApproachPlace[/"MoveL to Place Point"/]
+    ApproachPlace --> OpenGripper{{"Release Object"}}
+    OpenGripper --> CheckRelease{{"Check for successfull release"}}
+    CheckRelease -- Yes --> ClearArea[/"MoveL Up / Clear Area"/]
+    CheckRelease -- No --> HandleError
+    ClearArea --> ReturnHome[/"Return to Home / Ready for Next Cycle"/]
+    ReturnHome --> ReadyForNext["Ready for Next Cycle"]
+    ReadyForNext --> Loop{"Repeat Cycle?"}
+    Loop -- Yes --> WaitForSignal
+    Loop -- No --> End(["END"])
+    HandleError -- Rethrow Error --> StopProcess(["STOP"])
+    HandleError -- Retry --> ReadyForNext
+    InitSystem["START"] --> Start["Home Position"]
+    Start --> WaitForSignal
+
+    InitSystem@{ shape: rounded}
+    Start@{ shape: lean-r}
+
+

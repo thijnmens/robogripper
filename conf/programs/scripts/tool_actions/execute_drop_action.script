@@ -1,0 +1,4 @@
+def execute_drop_action():
+    set_standard_digital_out(0, False)
+end
+

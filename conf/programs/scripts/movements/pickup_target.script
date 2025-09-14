@@ -1,0 +1,32 @@
+def pickup_target(index):
+    on_target_position = [0, -1.918888889, -2.79253, 0, 1.5708, 0]
+    rotated_positions = [on_target_position[0] + base_45_rotation,
+        on_target_position[1],
+        on_target_position[2],
+        on_target_position[3],
+        on_target_position[4],
+    on_target_position[5]]
+
+    height_reposition = p[0, 0, 0.15, 0, 0, 0]
+    target_positions = [p[0, 0.05, 0, 0, 0, 0],   # target 1
+    p[0, -0.05, 0, 0, 0, 0]]   # target 2
+
+
+    # sanity check
+    if (index >= 0) and (index < size(target_positions)):
+        pos = get_forward_kin(rotated_positions)
+        target_offset = target_positions[index]
+
+        popup("Picking up target number: " + to_str(index + 1),
+            title = "Picking target number: " + to_str(index + 1),
+        blocking = True)
+
+        movel(pose_add(pose_add(pos, target_offset), height_reposition))
+
+        execute_gripping_action()
+
+    else:
+        popup("Invalid pickup index: " + to_str(index),
+        title = "Error", blocking = True)
+    end
+end

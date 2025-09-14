@@ -1,0 +1,13 @@
+# For precision reasons, all standard poses (home position, hovering pickup area), are defaulted with JOINTS position.
+def pickup_area():
+    popup("Moving to pickup area", title = "Pickup stance", blocking = True)
+    pick_up_area_position_j = [0, -1.918888889, -1, 0, 1.5708, 0]
+    rotated_pick_up_positions = [pick_up_area_position_j[0] + 0.7854,
+        pick_up_area_position_j[1],
+        pick_up_area_position_j[2],
+        pick_up_area_position_j[3],
+        pick_up_area_position_j[4],
+    pick_up_area_position_j[5]]
+
+    movej(rotated_pick_up_positions)
+end
