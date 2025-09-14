@@ -13,7 +13,8 @@ Currently developing using the official Docker image:
   - [Pull the Image](#pull-the-image)
   - [Run the Image](#run-the-image)
   - [Viewing Installation (.install) Files](#viewing-installation-install-files)
-- [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
+- [Structure](#structure)
+  - [Specifics and how to read the code](#specifics-and-how-to-read-the-code)
 
 ---
 
@@ -43,7 +44,6 @@ To add pathing of the scripts that are in this repo, add to your command the pat
 -v "~/conf/programs:/ursim/programs" universalrobots/ursim_e-series
 ```
 
-
 Which means, run 
 ```bash
 docker run --rm -it -p 5900:5900 -p 6080:6080 -v "REPOPATH/programs:/ursim/programs" universalrobots/ursim_e-series
@@ -58,7 +58,13 @@ http://localhost:6080/vnc.html?host=localhost&port=6080⁠
 
 .install files can't be opened normally through an IDE such as notepad or vscode, they have to first be converted into a zip/rar and then extracted.
 
-# Specifics and how to read the code
+# Structure 
+
+Functions are defined and split into their respective files.
+
+An actions list script (action_script) runs through the actions, which can be re-ordered and assigned. The home position defines the angularity  of the base
+
+## Specifics and how to read the code
 There are a few different functions used on how the movement is implemented, namely:
 
 - movej: used to reach a specific pose by reaching specific joint positions.

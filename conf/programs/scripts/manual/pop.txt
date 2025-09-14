@@ -1,0 +1,17 @@
+ Program
+   Robot Program
+     MoveJ
+       Script: execute_gripping_action.script
+       Script: execute_drop_action.script
+       Start_pos
+       Target_1
+       Script: grip_action.script
+       Lift_t_1
+       Waypoint_4
+       Script: drop_action.script
+       start_pos
+       Target_2
+       Script: grip_action.script
+       go_drop_2
+       Script: drop_action.script
+       lift

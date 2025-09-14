@@ -21,7 +21,7 @@ def home_position():
     home_joint_positions[5]]
     current_pose = get_actual_joint_positions()
     if (current_pose != rotated_positions):
-        popup("Resetting to home position", title = "To home position", blocking = True)
+        popup("Resetting to rotated position", title = "To rotated position", blocking = True)
         movej(rotated_positions)
     else:
         popup("Resetting unnecessary, skipping action...", title = "Skipping home reset", blocking = True)

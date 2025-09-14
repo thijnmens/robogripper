@@ -1,0 +1,72 @@
+def pop():
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_tool_voltage(0)
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_payload(0.0)
+  set_safety_mode_transition_hardness(1)
+  step_count_3b8b8fc2_7dfe_4be7_b67d_50e1577b2048 = 0.0
+  thread Step_Counter_Thread_9ae985f3_da9d_45f5_abcf_adbcf962907f():
+    while (True):
+      step_count_3b8b8fc2_7dfe_4be7_b67d_50e1577b2048 = step_count_3b8b8fc2_7dfe_4be7_b67d_50e1577b2048 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_9ae985f3_da9d_45f5_abcf_adbcf962907f()
+  set_gravity([0.0, 0.0, 9.82])
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "MoveJ"
+    $ 3 "Script: execute_gripping_action.script"
+    def execute_gripping_action():
+    
+        popup("Gripper action commencing", title = "Gripper action", blocking = True)
+    
+        voltage = get_standard_analog_in(0)
+        target_pose = pose_add(get_actual_tcp_pose(), p[0, 0, 0.1, 0, 0, 0]) #50 mm up
+        if (voltage > 1.5):
+            sleep(1.0)
+            set_standard_digital_out(0, True)   #close gripper
+            movel(target_pose)
+    
+    
+        else:
+            popup("Voltage too low - Gripper not activated - STOPPING", title = "FAILURE", blocking = True)
+        end
+    end
+    $ 4 "Script: execute_drop_action.script"
+    def execute_drop_action():
+        set_standard_digital_out(0, False)
+    end
+    
+    $ 5 "Start_pos" "breakAfter"
+    movej(get_inverse_kin(p[.277302643497, .122944573094, .203701392365, 3.020945172413, -.614633737013, -.059490959911], qnear=[0.7853902632066411, -1.2217304763960306, -2.443460952792061, -1.117010721276371, 1.5708521905495274, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 6 "Target_1" "breakAfter"
+    movej(get_inverse_kin(p[.169329233300, .331744004157, .143526452235, -3.007163974445, -.316065670145, -.050976136241], qnear=[1.3962634015954636, -1.5707963267948966, -2.443460952792061, -0.5759586531581288, 1.5707963267948966, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 7 "Script: grip_action.script"
+    execute_gripping_action()
+    $ 8 "Lift_t_1" "breakAfter"
+    movej(get_inverse_kin(p[.167741411923, .322739021510, .260167930379, -3.031941478929, -.399162668542, -.040150148776], qnear=[1.3962634015954636, -1.3089969389957472, -2.2689280275926285, -1.0471975511965976, 1.5707963267948966, -0.4363323129985824]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 9 "Waypoint_4" "breakAfter"
+    movej(get_inverse_kin(p[.493182385035, .514040222325, .409084702314, -3.060017466465, .348644951149, -.051318189651], qnear=[0.9599310885968813, -2.0943951023931953, -0.9773843811168246, -1.5707963267948966, 1.5707963267948966, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 10 "Script: drop_action.script"
+    execute_drop_action()
+    $ 11 "start_pos" "breakAfter"
+    movej(get_inverse_kin(p[.204734834329, .243359334116, .254190573615, 2.943558984021, .051387569309, -.110821851946], qnear=[1.2217304763960306, -1.2217304763960306, -2.2689280275926285, -1.4311699866353502, 1.5707474970386759, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 12 "Target_2" "breakAfter"
+    movej(get_inverse_kin(p[.436914425941, .042868842089, .226291228942, 2.801557951465, -1.247333963184, -.115611037090], qnear=[0.3490658503988659, -1.5707963267948966, -2.0943951023931953, -1.1519173063162575, 1.5707963267948966, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 13 "Script: grip_action.script"
+    execute_gripping_action()
+    $ 14 "go_drop_2" "breakAfter"
+    movej(get_inverse_kin(p[.657914498804, .343086043398, .303981666946, -2.939053365784, .842759990828, -.098651471811], qnear=[0.6283185307179586, -2.181661564992912, -1.117010721276371, -1.3089969389957472, 1.5707963267948966, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 15 "Script: drop_action.script"
+    execute_drop_action()
+    $ 16 "lift" "breakAfter"
+    movej(get_inverse_kin(p[.528213309783, .459692853840, .337900661604, 3.037475815517, -.481088906708, -.060694320855], qnear=[0.8726646259971648, -2.0943951023931953, -1.1237983643083362, -1.5707963267948966, 1.5707963267948966, -0.3839724354387525]), a=1.3962634015954636, v=1.0471975511965976)
+  end
+end
